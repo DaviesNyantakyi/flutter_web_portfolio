@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_portfolio/app_bar_view/app_bar_view.dart';
 import 'package:flutter_web_portfolio/header_view/header_view.dart';
 import 'package:flutter_web_portfolio/project_view/project_view.dart';
+import 'package:flutter_web_portfolio/skills_view/skills_view.dart';
+import 'package:flutter_web_portfolio/utilities/constant.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import 'widgets/drawer.dart';
+import 'header_view/widgets/drawer.dart';
 
-class PortfolioView extends StatelessWidget {
-  const PortfolioView({Key? key}) : super(key: key);
+class Portfolio extends StatelessWidget {
+  const Portfolio({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +22,18 @@ class PortfolioView extends StatelessWidget {
           body: SingleChildScrollView(
             child: SafeArea(
               child: Column(
-                children: const [
-                  AppBarView(),
-                  HeaderView(),
-                  ProjectView(),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppBarView(),
+                  const HeaderView(),
+                  screenInfo.isMobile || screenInfo.isTablet
+                      ? const SizedBox(
+                          height: 64,
+                        )
+                      : Container(),
+                  const ProjectView(),
+                  const SkillsView(),
+                  Container(height: kAppBarHeight)
                 ],
               ),
             ),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_web_portfolio/utilities/constant.dart';
 import 'package:flutter_web_portfolio/widgets/button.dart';
@@ -7,11 +5,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 List<String> kDrawerItems = [
   'Projects',
-  'About Me',
   'Contact',
 ];
 
-double _leadingWidth = 100;
+double _leadingWidth = 70;
 
 class ApkerooLogo extends StatelessWidget {
   final double? width;
@@ -41,22 +38,22 @@ class AppBarView extends StatelessWidget {
       builder: (context, screenInfo) {
         if (screenInfo.isMobile || screenInfo.isTablet) {
           // Hide the drawer when in mobile view
-          return const _MobileAppBarView();
+          return const _MobileView();
         }
-        return const _DesktopAppBarView();
+        return const _DesktopView();
       },
     );
   }
 }
 
-class _MobileAppBarView extends StatefulWidget {
-  const _MobileAppBarView({Key? key}) : super(key: key);
+class _MobileView extends StatefulWidget {
+  const _MobileView({Key? key}) : super(key: key);
 
   @override
-  State<_MobileAppBarView> createState() => _MobileAppBarViewState();
+  State<_MobileView> createState() => _MobileViewState();
 }
 
-class _MobileAppBarViewState extends State<_MobileAppBarView> {
+class _MobileViewState extends State<_MobileView> {
   bool onHover = false;
 
   @override
@@ -96,27 +93,27 @@ class _MobileAppBarViewState extends State<_MobileAppBarView> {
   }
 }
 
-class _DesktopAppBarView extends StatelessWidget {
-  const _DesktopAppBarView({Key? key}) : super(key: key);
+class _DesktopView extends StatelessWidget {
+  const _DesktopView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leadingWidth: _leadingWidth,
-      toolbarHeight: kAppBarHeight,
-      leading: const Padding(
-        padding: EdgeInsets.only(left: 50),
-        child: ApkerooLogo(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kAppBarPadding),
+      child: AppBar(
+        leadingWidth: _leadingWidth,
+        toolbarHeight: kAppBarHeight,
+        leading: const ApkerooLogo(),
+        actions: kDrawerItems
+            .map(
+              (e) => NavItem(
+                text: e,
+                onTap: () {},
+                onHover: (value) {},
+              ),
+            )
+            .toList(),
       ),
-      actions: kDrawerItems
-          .map(
-            (e) => NavItem(
-              text: e,
-              onTap: () {},
-              onHover: (value) {},
-            ),
-          )
-          .toList(),
     );
   }
 }
